@@ -37,7 +37,7 @@ The student were asked to provide a ROS package containing the description of 3 
 
 How to run:
 Provided that ros melodic is installed in the system and that the ROS workspace is correctly sourced.
-Copy the entire ros_basics package in the your_workspace/src folder.
+Copy the entire ros_basics package in the your_workspace/src folder, the run catkin_make in the environment.
 
 Open a terminal and run the command: 
 	- roslaunch ros_basics project.launch
