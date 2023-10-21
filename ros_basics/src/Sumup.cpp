@@ -65,6 +65,7 @@ void Sumup::execute_Value_Callback(const std_msgs::Int32::ConstPtr &msg) {
 
       this->smp_publisher.publish(message_value);
       ROS_INFO("The result is %d", multiplication);
+      // std::cout << "The result is " << multiplication;
   }
 }
 
