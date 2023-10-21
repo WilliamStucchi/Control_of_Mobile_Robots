@@ -65,3 +65,5 @@ CATKIN_IGNORE
 **/.history
 
 # End of https://www.gitignore.io/api/visualstudiocode
+.vscode/c_cpp_properties.json
+.vscode/settings.json
