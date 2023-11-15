@@ -1,0 +1,11 @@
+<launch>
+  <!--- Run single track simulator node -->
+  <node pkg="unicycle_dyn_sim" type="unicycle_dyn_sim" respawn="false" name="unicycle_dyn_sim" output="screen">
+    <rosparam file="$(find unicycle_dyn_sim)/config/unicycle_dyn_sim.yaml" command="load" />
+    <rosparam param="/use_sim_time">true</rosparam>
+  </node> 
+
+  <!--- Run test single track simulator node -->
+  <node pkg="unicycle_dyn_sim" type="test_simple_unicycle_dyn" respawn="false" name="test_simple_unicycle_dyn" output="screen">
+  </node> 
+</launch>
