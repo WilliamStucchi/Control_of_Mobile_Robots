@@ -3,52 +3,49 @@ Scope: Homework 2, unicycle kinematic simulator
 Author: William Stucchi
 
 
-Description:
+DESCRIPTION:
 This is the second homework of the course Control of Mobile Robots, held by professor Bascetta Luca.
-The scope of this project was to introduce the students in the use of ROS, in order to acquire
-a decent understanding of basic concepts such as nodes, topics and parameter server.
-The student were asked to provide a ROS package containing the description of 3 nodes:
+The scope of this project was to simulate a CIRCULAR trajectory performed by the robot, taking into 
+account the actuations of the robot.
+The student were asked to provide a ROS package containing the description of 2 nodes:
 
-	- system_clock node: this node has the role of producing a clock for the counter nodes, that 
-				thus synchronize their operations based on the frequency of the clock
-				provided by this node. 
-				The computation of this node is published to topic /clock.
+	- robot simulator: this node takes inputs from the topic \cmd, of type Float64MultiArray, representing
+                        the actual time and robot commands, and publishes on topic \state a Float64MultiArray
+                        representing the actual time and robot state.
  
-	- counter node: this node increments a counter, starting from a given value (0 in this specific case)
-			until it reaches a threshold (10 in this specific case). After that, the value of the
-			counter is published in the topic /value.
-			A number N = 2 of this nodes must be active in the system when launched.
-			This node sychronizes its operations by subscribing to topic /clock and reading
-			the clock published by the system_clock node.
+	- test node: this node publishes robot inputs on topic \cmd to drive the robot along the desired trajecotry.
 
-	- sumup node: this node listend on topic /value and when it receives 2 values of the counters 
-			(provided by the two active counter nodes) performs its operations, that include
-			the summation of the two counter values received and the multiplication of the 
-			result by a value alfa (1 in this case).
-			The result is the published in the topic /sum and as ROS_INFO.
+In addition, it was requested to include a sim_robot.launch file, a parameter server with robot and trajectory parameters
+and a python script that loads a bag and shows the following figures:
 
-	- parameter file: in the src/config folder it is provided a configuration file containing the parameter
-			that the system_clock node needs to read from the parameter server. The value is used
-			by the node in order to increment the value of the clock.
+    - the desired trajectory, as a dashed red line, and the actual trajectory, as a solid blue line.
+    - the robot commands wrt time (linear velocity and angluar velocity).
+    - the robot state wrt time (x, y, and theta).
 
-	- project.launch: this file is the launch file of the project. It set the parameter server and the it 
-			runs the system_clock node, the two counter nodes and the sumup node.
+The actuation of the linear velocity was a unitary transfer function, while the angluar velocity is actuated 
+by the following transfer functions: TF(s) = 8100 / (s^2 + 135*s + 8100).
 
-
-How to run:
+HOW TO RUN:
 Provided that ros melodic is installed in the system and that the ROS workspace is correctly sourced.
-Copy the entire ros_basics package in the your_workspace/src folder, the run catkin_make in the environment.
+Copy the entire simulator package in the your_workspace/src folder, then run catkin_make in the environment.
 
 Open a terminal and run the command: 
-	- roslaunch ros_basics project.launch
+	- roslaunch simulator sim_robot.launch
 
-Optionally, open 3 more terminals and run the commands:
-	- in terminal 1: rostopic echo /clock
-		this command shows the content of the topic /clock, where system_clock node is publishing.
+In the project folder there is already provided a bag that was recorded from previous runs, while launching the 
+project from ros will record another bag. 
 
-	- in terminal 2: rostopic echo /value
-		this command shows the content of the topic /value, where the two counter nodes will publish.
+Optionally, open 2 more terminals and run the commands:
+	- in terminal 1: rostopic echo /cmd
+		this command shows the content of the topic /cmd, where actuation commands are publihed by the test node.
 
-	- in terminal 3: rostopic echo /sum
-		this command shows the content of the topic /sum, where sumup node will publish.
+	- in terminal 2: rostopic echo /state
+		this command shows the content of the topic /state, where the state of the robot is published.
+
+SCRIPT:
+The python script that read the bag and show figures is located in the simulator/script folder.
+To run it open a new terminal, locate the script and the bag, then write:
+    - python <script_path> <bag_path>
+
+3 figures will be shown.
 
