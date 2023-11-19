@@ -9,7 +9,7 @@
   <node pkg="simulator" type="test_circumference_unicycle_kin" respawn="false" name="test_circumference_unicycle_kin" output="screen">
   </node> 
 
-  <node name="record" pkg="rosbag" type="record" args="-a --duration=5.2 -O $(find simulator)/bags/simulation_bag.bag">
+  <node name="record" pkg="rosbag" type="record" args="-a --duration=5.2 -O $(find simulator)/bags/new_simulation_bag.bag">
   </node>
   
 </launch>

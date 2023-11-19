@@ -32,8 +32,8 @@ Copy the entire simulator package in the your_workspace/src folder, then run cat
 Open a terminal and run the command: 
 	- roslaunch simulator sim_robot.launch
 
-In the project folder there is already provided a bag that was recorded from previous runs, while launching the 
-project from ros will record another bag. 
+In the project folder there is already provided a bag that was recorded from previous runs (previous_simulation_bag.bag), while launching the 
+project from ros will record another bag (new_simulation_bag.bag). 
 
 Optionally, open 2 more terminals and run the commands:
 	- in terminal 1: rostopic echo /cmd
