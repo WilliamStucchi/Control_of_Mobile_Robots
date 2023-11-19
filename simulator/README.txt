@@ -1,10 +1,10 @@
 Course: Control of Mobile Robots, professor Bascetta Luca, A.Y. 2023-2024 
-Scope: Homework 1, ros_basics
+Scope: Homework 2, unicycle kinematic simulator
 Author: William Stucchi
 
 
 Description:
-This is the first homework of the course Control of Mobile Robots, held by professor Bascetta Luca.
+This is the second homework of the course Control of Mobile Robots, held by professor Bascetta Luca.
 The scope of this project was to introduce the students in the use of ROS, in order to acquire
 a decent understanding of basic concepts such as nodes, topics and parameter server.
 The student were asked to provide a ROS package containing the description of 3 nodes:
