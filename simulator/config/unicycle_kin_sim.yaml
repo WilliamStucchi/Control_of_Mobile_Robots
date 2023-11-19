@@ -1,0 +1,12 @@
+# Simulator configuration parameters
+  /unicycle_kin_sim/dt: 0.001                   # Integration step
+
+# Vehicle initial state
+  /unicycle_kin_sim/x0: 0.0                     # Initial position x
+  /unicycle_kin_sim/y0: 0.0                     # Initial position y
+  /unicycle_kin_sim/theta0: 0.0                 # Initial heading
+
+# Trajectory parameters
+  /test_circumference_unicycle_kin/radius: 1.0                       # Radius of the circumference
+  /test_circumference_unicycle_kin/period: 5.0                       # Period of rotation
+
