@@ -1,0 +1,12 @@
+<launch>
+  <!--- Run bicycle simulator node -->
+  <node pkg="car_simulator" type="bicycle_sim" respawn="false" name="bicycle_sim" output="screen">
+    <rosparam file="$(find car_simulator)/config/car_simulator.yaml" command="load" />
+    <rosparam param="/use_sim_time">true</rosparam>
+  </node> 
+
+  <!--- Run linerizing controller node -->
+  <node pkg="car_traj_ctrl" type="car_dyn_trajctrl" respawn="false" name="car_dyn_trajctrl" output="screen">
+    <rosparam file="$(find car_traj_ctrl)/config/car_traj_ctrl.yaml" command="load" />
+  </node> 
+</launch>
