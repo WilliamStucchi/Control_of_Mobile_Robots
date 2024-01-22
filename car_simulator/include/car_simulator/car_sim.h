@@ -25,6 +25,7 @@ class car_sim
     int tyre_model;
     double r0, beta0, x0, y0, psi0;
     double m, cog_a, cog_b, Cf, Cr, mu, Iz;
+    double Fyf_max, Fyr_max;
 
     /* ROS topic callbacks */
     void vehicleCommand_MessageCallback(const std_msgs::Float64MultiArray::ConstPtr& msg);

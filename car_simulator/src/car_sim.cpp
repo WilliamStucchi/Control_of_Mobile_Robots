@@ -67,6 +67,14 @@ void car_sim::Prepare(void)
     if (false == Handle.getParam(FullParamName, psi0))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
 
+    FullParamName = ros::this_node::getName()+"/Fyf_max";
+    if (false == Handle.getParam(FullParamName, Fyf_max))
+        ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
+
+    FullParamName = ros::this_node::getName()+"/Fyr_max";
+    if (false == Handle.getParam(FullParamName, Fyr_max))
+        ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
+
     /* ROS topics */
     vehicleCommand_subscriber = Handle.subscribe("/car_input", 1, &car_sim::vehicleCommand_MessageCallback, this);
     vehicleState_publisher = Handle.advertise<std_msgs::Float64MultiArray>("/car_state", 1);
@@ -151,6 +159,18 @@ void car_sim::PeriodicTask(void)
 
     double force_front, force_rear;
     simulator->getLateralForce(force_front, force_rear);
+
+    if(force_front > Fyf_max) {
+        Fyf_max = force_front;
+        ROS_INFO("Fyf MAX: %f", Fyf_max);
+        ROS_INFO("Fyr MAX: %f", Fyr_max);
+    }
+    if(force_rear > Fyr_max) {
+        Fyr_max = force_rear;
+        ROS_INFO("Fyf MAX: %f", Fyf_max);
+        ROS_INFO("Fyr MAX: %f", Fyr_max);
+    }
+
 
     double velocity_act, steer_act;
     simulator->getCommands(velocity_act, steer_act);

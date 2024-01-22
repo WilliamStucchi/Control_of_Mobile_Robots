@@ -20,6 +20,9 @@
   /car_sim/y0: 0.0                         # Initial position y
   /car_sim/psi0: 1.57                       # Initial heading
 
+  /car_sim/Fyf_max: 0.0
+  /car_sim/Fyr_max: 0.0
+
 # ------------------------------------------------------------------------------------------------------------------------
 # Simulator configuration parameters: kinematics
 

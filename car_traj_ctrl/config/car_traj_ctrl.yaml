@@ -19,6 +19,7 @@
 
   /car_dyn_trajctrl/saved_I_x: 0.0
   /car_dyn_trajctrl/saved_I_y: 0.0
-  /car_dyn_trajctrl/x_maxError: 0.0
-  /car_dyn_trajctrl/y_maxError: 0.0
+  /car_dyn_trajctrl/x_max_error: 0.0
+  /car_dyn_trajctrl/y_max_error: 0.0
+  /car_dyn_trajctrl/print_error: 0.0
 

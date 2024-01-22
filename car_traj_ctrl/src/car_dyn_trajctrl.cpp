@@ -71,12 +71,16 @@ void car_dyn_trajctrl::Prepare(void)
     if (false == Handle.getParam(FullParamName, saved_I_y))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
 
-    FullParamName = ros::this_node::getName()+"/x_maxError";
-    if (false == Handle.getParam(FullParamName, x_maxError))
+    FullParamName = ros::this_node::getName()+"/x_max_error";
+    if (false == Handle.getParam(FullParamName, x_max_error))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
     
-    FullParamName = ros::this_node::getName()+"/y_maxError";
-    if (false == Handle.getParam(FullParamName, y_maxError))
+    FullParamName = ros::this_node::getName()+"/y_max_error";
+    if (false == Handle.getParam(FullParamName, y_max_error))
+        ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
+
+    FullParamName = ros::this_node::getName()+"/print_error";
+    if (false == Handle.getParam(FullParamName, print_error))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
 
     /* ROS topics */
@@ -136,12 +140,17 @@ void car_dyn_trajctrl::PeriodicTask(void)
     controller->output_transformation(xP, yP);
 
     pi_controller(vPx, xPref, xP, Ts, Tix, saved_I_x, dxref, Kpx, x_old_ref, x_old);
-    compute_max_error(x_maxError, xPref-xP);
-    ROS_INFO("Max Error X: %f", x_maxError);
+    compute_max_error(x_max_error, xPref-xP);
 
     pi_controller(vPy, yPref, yP, Ts, Tiy, saved_I_y, dyref, Kpy, y_old_ref, y_old);
-    compute_max_error(y_maxError, yPref-yP);
-    ROS_INFO("Max Error Y: %f", y_maxError);
+    compute_max_error(y_max_error, yPref-yP);
+
+    if(print_error > 0.0) {
+        ROS_INFO("Max Error X: %f", x_max_error);
+        ROS_INFO("Max Error Y: %f", y_max_error);
+        print_error = 0.0;
+    }
+    
 
     // Linearization law
     controller->control_transformation(vPx, vPy, v, phi);
@@ -202,5 +211,6 @@ void car_dyn_trajctrl::pi_controller(
 void car_dyn_trajctrl::compute_max_error(double& maxError, double error) {
     if(error > maxError) {
         maxError = error;
+        print_error = 1.0;
     }
 }

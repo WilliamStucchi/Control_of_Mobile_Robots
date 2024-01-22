@@ -37,7 +37,7 @@ class car_dyn_trajctrl
     double xP, yP, xPref, yPref, x_old_ref, y_old_ref, x_old, y_old;
     double vPx, vPy, v, phi;
     double saved_I_x, saved_I_y;
-    double x_maxError, y_maxError;
+    double x_max_error, y_max_error, print_error;
 
   public:
     float RunPeriod;
