@@ -155,6 +155,9 @@ void car_dyn_trajctrl::PeriodicTask(void)
     // Linearization law
     controller->control_transformation(vPx, vPy, v, phi);
 
+    /* Saturation */
+    controlSaturation(v, phi);
+
     /*  Publish vehicle commands */
     std_msgs::Float64MultiArray vehicleCommandMsg;
     vehicleCommandMsg.data.push_back(ros::Time::now().toSec());
@@ -184,11 +187,12 @@ void car_dyn_trajctrl::compute_trajectory(double& xref, double& dxref, double& y
     // Trajectory parameters (these parameters should be moved to the parameter server)
     const double a = 2.0;
     const double w = (2 * M_PI) / T;
+    const double t = ros::Time::now().toSec();
         
-    xref    = a*std::sin(w*ros::Time::now().toSec());
-    dxref   = w*a*std::cos(w*ros::Time::now().toSec());
-    yref    = a*std::sin(w*ros::Time::now().toSec())*std::cos(w*ros::Time::now().toSec());
-    dyref   = w*a*(std::pow(std::cos(w*ros::Time::now().toSec()),2.0)-std::pow(std::sin(w*ros::Time::now().toSec()),2.0));
+    xref    = a*std::sin(w*t);
+    dxref   = w*a*std::cos(w*t);
+    yref    = a*std::sin(w*t)*std::cos(w*t);
+    dyref   = w*a*(std::pow(std::cos(w*t),2.0)-std::pow(std::sin(w*t),2.0));
     
 }
 
@@ -198,19 +202,36 @@ void car_dyn_trajctrl::pi_controller(
     // Compute error
     double err_P = (Pref-P);//-(old_ref-old);
 
+    // FF + PI control action
+    vP = dref + Kp*(err_P + saved_I);
+
     // Update the integral error, with Forward Euler
     saved_I += err_P * Ts / Ti;
-
-    // PI + FF control action
-    vP = dref + Kp*(err_P + saved_I);
 
     old_ref = Pref;
     old = P;
 }
 
 void car_dyn_trajctrl::compute_max_error(double& maxError, double error) {
-    if(error > maxError) {
+    if(std::abs(error) > std::abs(maxError)) {
         maxError = error;
         print_error = 1.0;
     }
+}
+
+void car_dyn_trajctrl::controlSaturation(double& v, double& phi){
+
+    // Saturation on the actual control action
+    if(v>6){
+        v = 6;
+    }else if (v<-6){
+        v = -6;
+    }
+
+    if(phi>2){
+        phi = 2;
+    }else if (phi<-2){
+        phi = -2;
+    }
+
 }

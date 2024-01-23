@@ -2,20 +2,20 @@
   /car_dyn_trajctrl/run_period: 0.01          # Node execution period
 
 # Controller parameters
-  /car_dyn_trajctrl/P_dist: 0.12              # Distance of point P from odometric center
+  /car_dyn_trajctrl/P_dist: 0.05 #0.12              # Distance of point P from odometric center
   /car_dyn_trajctrl/l: 0.26                   # Bicycle/Car length
-  /car_dyn_trajctrl/Kpx: 1.0                  # P trajectory tracking controller gain for x direction
-  /car_dyn_trajctrl/Kpy: 1.0                  # P trajectory tracking controller gain for y direction
+  /car_dyn_trajctrl/Kpx: 12.0                  # P trajectory tracking controller gain for x direction
+  /car_dyn_trajctrl/Kpy: 12.0                  # P trajectory tracking controller gain for y direction
 
   /car_dyn_trajctrl/x_old: 0.0
   /car_dyn_trajctrl/y_old: 0.0
   /car_dyn_trajctrl/x_old_ref: 0.0
   /car_dyn_trajctrl/y_old_ref: 0.0
   /car_dyn_trajctrl/T: 5.1
-  /car_dyn_trajctrl/Ts: 0.0
+  /car_dyn_trajctrl/Ts: 0.0 #0.001
 
-  /car_dyn_trajctrl/Tix: 1.0
-  /car_dyn_trajctrl/Tiy: 1.0
+  /car_dyn_trajctrl/Tix: 20 #1.0
+  /car_dyn_trajctrl/Tiy: 20 #1.0
 
   /car_dyn_trajctrl/saved_I_x: 0.0
   /car_dyn_trajctrl/saved_I_y: 0.0

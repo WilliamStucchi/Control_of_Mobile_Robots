@@ -160,12 +160,12 @@ void car_sim::PeriodicTask(void)
     double force_front, force_rear;
     simulator->getLateralForce(force_front, force_rear);
 
-    if(force_front > Fyf_max) {
+    if(std::abs(force_front) > std::abs(Fyf_max)) {
         Fyf_max = force_front;
         ROS_INFO("Fyf MAX: %f", Fyf_max);
         ROS_INFO("Fyr MAX: %f", Fyr_max);
     }
-    if(force_rear > Fyr_max) {
+    if(std::abs(force_rear) > std::abs(Fyr_max)) {
         Fyr_max = force_rear;
         ROS_INFO("Fyf MAX: %f", Fyf_max);
         ROS_INFO("Fyr MAX: %f", Fyr_max);

@@ -18,7 +18,7 @@
   /car_sim/beta0: 0.0                      # Initial sideslip
   /car_sim/x0: 0.0                         # Initial position x
   /car_sim/y0: 0.0                         # Initial position y
-  /car_sim/psi0: 1.57                       # Initial heading
+  /car_sim/psi0: 0.0                      # Initial heading 0.78
 
   /car_sim/Fyf_max: 0.0
   /car_sim/Fyr_max: 0.0
