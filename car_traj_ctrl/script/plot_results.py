@@ -56,12 +56,13 @@ bag.close()
 
 # Plot data
 plt.figure(1)
-plt.plot(vehicleState_x,vehicleState_y)
+plt.plot(vehicleState_x,vehicleState_y, label='actual')
 plt.plot(vehicleState_x[0],vehicleState_y[0],'ro')
 plt.plot(vehicleState_x[len(vehicleState_x)-1],vehicleState_y[len(vehicleState_x)-1],'rx')
-plt.plot(controllerState_xref,controllerState_yref,'g')
+plt.plot(controllerState_xref,controllerState_yref,'r--', label='reference')
 plt.xlabel("x [m]")
 plt.ylabel("y [m]")
+plt.legend(loc="best")
 
 plt.figure(2)
 plt.subplot(211)

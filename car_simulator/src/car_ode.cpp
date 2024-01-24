@@ -128,8 +128,9 @@ void car_ode::vehicle_ode(const state_type &state, state_type &dstate, double t)
     }
 
     // Vehicle equations
-    dstate[0] = (a*Fyf-b*Fyr)/Iz;                       // dr
-    dstate[1] = (Fyf+Fyr)/(m*Vx)*std::cos(beta)-r;      // dbeta (cos beta?)
+    dstate[0] = (a*Fyf-b*Fyr)/Iz;                      
+    //dstate[0] = (a*Fyf*std::cos(delta)-b*Fyr)/Iz;       // dr
+    dstate[1] = (Fyf+Fyr)/(m*Vx)*std::cos(beta)-r;      // dbeta 
     dstate[2] = Vx*std::cos(psi);                       // dx
     dstate[3] = Vx*std::sin(psi);                       // dy
     dstate[4] = r;                                      // dpsi

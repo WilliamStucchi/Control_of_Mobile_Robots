@@ -37,17 +37,17 @@ void test_simple_car::Shutdown(void)
 void test_simple_car::PeriodicTask(void)
 {
     /* Vehicle commands */
-    if (ros::Time::now().toSec()<=5.0)
+    if (ros::Time::now().toSec()<=3.0)
     {
         speed = 1.0;
         steer = 0.0;
     }
-    else if (ros::Time::now().toSec()>5.0 && ros::Time::now().toSec()<=5.5)
+    else if (ros::Time::now().toSec()>3.0 && ros::Time::now().toSec()<=3.5)
     {
         speed = 1.0;
         steer = 0.05;
     }
-    else if (ros::Time::now().toSec()>5.5 && ros::Time::now().toSec()<=6)
+    else if (ros::Time::now().toSec()>3.5 && ros::Time::now().toSec()<=4)
     {
         speed = 1.0;
         steer = -0.05;

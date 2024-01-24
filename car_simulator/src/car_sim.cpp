@@ -67,6 +67,7 @@ void car_sim::Prepare(void)
     if (false == Handle.getParam(FullParamName, psi0))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
 
+    // Lateral forces
     FullParamName = ros::this_node::getName()+"/Fyf_max";
     if (false == Handle.getParam(FullParamName, Fyf_max))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
@@ -162,13 +163,13 @@ void car_sim::PeriodicTask(void)
 
     if(std::abs(force_front) > std::abs(Fyf_max)) {
         Fyf_max = force_front;
-        ROS_INFO("Fyf MAX: %f", Fyf_max);
-        ROS_INFO("Fyr MAX: %f", Fyr_max);
+        //ROS_INFO("Fyf MAX: %f", Fyf_max);
+        //ROS_INFO("Fyr MAX: %f", Fyr_max);
     }
     if(std::abs(force_rear) > std::abs(Fyr_max)) {
         Fyr_max = force_rear;
-        ROS_INFO("Fyf MAX: %f", Fyf_max);
-        ROS_INFO("Fyr MAX: %f", Fyr_max);
+        //ROS_INFO("Fyf MAX: %f", Fyf_max);
+        //ROS_INFO("Fyr MAX: %f", Fyr_max);
     }
 
 
@@ -182,6 +183,8 @@ void car_sim::PeriodicTask(void)
     if (std::fabs(std::fmod(time,5.0)) < 1.0e-3)
     {
         ROS_INFO("Simulator time: %d seconds", (int) time);
+        ROS_INFO("Fyf MAX: %f", Fyf_max);
+        ROS_INFO("Fyr MAX: %f", Fyr_max);
     }
 
     /*  Publish vehicle state */

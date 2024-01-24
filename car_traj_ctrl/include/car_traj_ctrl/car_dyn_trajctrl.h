@@ -30,7 +30,6 @@ class car_dyn_trajctrl
     void compute_trajectory(double& xref, double& dxref, double& yref, double& dyref);
     void pi_controller(double& vP, double Pref, double P, double Ts, double Ti, double& saved_I, double dref, double Kp, double& old_ref, double& old);
     void compute_max_error(double& maxError, double error);
-    void controlSaturation(double& v, double& phi);
 
     /* Node state variables */
     car_dyn_fblin* controller;

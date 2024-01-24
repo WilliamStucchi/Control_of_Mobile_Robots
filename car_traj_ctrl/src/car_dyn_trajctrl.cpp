@@ -1,7 +1,6 @@
 #include "car_traj_ctrl/car_dyn_trajctrl.h"
 
 #include <unistd.h>
-#include <cmath>
 
 
 void car_dyn_trajctrl::Prepare(void)
@@ -123,8 +122,6 @@ void car_dyn_trajctrl::Shutdown(void)
 
 void car_dyn_trajctrl::vehicleState_MessageCallback(const std_msgs::Float64MultiArray::ConstPtr& msg)
 {
-    // Input command: t, msg->data[0]; x, msg->data[1]; y, msg->data[2]; theta, msg->data[3];
-    // linear velocity, msg->data[4]; angular velocity, msg->data[5]
     /*  Set vehicle state */
     controller->set_carState(msg->data.at(1), msg->data.at(2), msg->data.at(3));
 }
@@ -151,12 +148,8 @@ void car_dyn_trajctrl::PeriodicTask(void)
         print_error = 0.0;
     }
     
-
     // Linearization law
     controller->control_transformation(vPx, vPy, v, phi);
-
-    /* Saturation */
-    controlSaturation(v, phi);
 
     /*  Publish vehicle commands */
     std_msgs::Float64MultiArray vehicleCommandMsg;
@@ -183,11 +176,11 @@ void car_dyn_trajctrl::PeriodicTask(void)
 
 
 void car_dyn_trajctrl::compute_trajectory(double& xref, double& dxref, double& yref, double& dyref) {
-     /* 8-shaped trajectory generation */
-    // Trajectory parameters (these parameters should be moved to the parameter server)
+    /* 8-shaped trajectory generation */
+    // Trajectory parameters 
     const double a = 2.0;
     const double w = (2 * M_PI) / T;
-    const double t = ros::Time::now().toSec();
+    double t = ros::Time::now().toSec();
         
     xref    = a*std::sin(w*t);
     dxref   = w*a*std::cos(w*t);
@@ -202,11 +195,11 @@ void car_dyn_trajctrl::pi_controller(
     // Compute error
     double err_P = (Pref-P);//-(old_ref-old);
 
-    // FF + PI control action
-    vP = dref + Kp*(err_P + saved_I);
-
     // Update the integral error, with Forward Euler
     saved_I += err_P * Ts / Ti;
+
+    // FF + PI control action
+    vP = dref + Kp*(err_P + saved_I);
 
     old_ref = Pref;
     old = P;
@@ -217,21 +210,4 @@ void car_dyn_trajctrl::compute_max_error(double& maxError, double error) {
         maxError = error;
         print_error = 1.0;
     }
-}
-
-void car_dyn_trajctrl::controlSaturation(double& v, double& phi){
-
-    // Saturation on the actual control action
-    if(v>6){
-        v = 6;
-    }else if (v<-6){
-        v = -6;
-    }
-
-    if(phi>2){
-        phi = 2;
-    }else if (phi<-2){
-        phi = -2;
-    }
-
 }

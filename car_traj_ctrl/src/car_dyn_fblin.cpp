@@ -9,7 +9,8 @@ car_dyn_fblin::car_dyn_fblin(double P_dist)
     this->P_dist  = P_dist;
 
     // Initialize robot position
-    x = y = theta = 0.0;
+    x = y = 0.0;
+    theta = 0.78;
 }
 
 car_dyn_fblin::~car_dyn_fblin()
