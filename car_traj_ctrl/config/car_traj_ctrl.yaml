@@ -13,11 +13,11 @@
   /car_dyn_trajctrl/x_old_ref: 0.0
   /car_dyn_trajctrl/y_old_ref: 0.0
 
-  /car_dyn_trajctrl/T: 5.1 #3.825 
+  /car_dyn_trajctrl/T: 5.1 #3.825
   /car_dyn_trajctrl/Ts: 0.01
 
-  /car_dyn_trajctrl/Tix: 5.25 #8.0
-  /car_dyn_trajctrl/Tiy: 5.75 #2.0
+  /car_dyn_trajctrl/Tix: 5.25 
+  /car_dyn_trajctrl/Tiy: 5.75 
 
   /car_dyn_trajctrl/saved_I_x: 0.0
   /car_dyn_trajctrl/saved_I_y: 0.0
