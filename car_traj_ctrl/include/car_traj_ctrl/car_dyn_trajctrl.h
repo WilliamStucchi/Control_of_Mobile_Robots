@@ -18,6 +18,7 @@ class car_dyn_trajctrl
     ros::Publisher vehicleCommand_publisher, controllerState_publisher;
 
     /* Parameters from ROS parameter server */
+    int traj_sel;
     double P_dist, l, Kpx, Kpy;
     double T, Tix, Tiy, Ts;
 

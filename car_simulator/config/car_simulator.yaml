@@ -1,5 +1,5 @@
 # Simulator configuration parameters: dynamics
-  /car_sim/tyre_model: 0                 # Tyre model (0, linear; 1, fiala with saturation; 2, fiala without saturation)
+  /car_sim/tyre_model: 0                # Tyre model (0, linear; 1, fiala with saturation; 2, fiala without saturation)
 
   /car_sim/dt: 0.001                       # Integration step
 
@@ -18,7 +18,7 @@
   /car_sim/beta0: 0.0                      # Initial sideslip
   /car_sim/x0: 0.0                         # Initial position x
   /car_sim/y0: 0.0                         # Initial position y
-  /car_sim/psi0: 0.78                      # Initial heading (0.0 for test simple)
+  /car_sim/psi0: 0.0 #0.78                      # Initial heading (0.0 for test simple and step tests in controller)
 
   /car_sim/Fyf_max: 0.0
   /car_sim/Fyr_max: 0.0

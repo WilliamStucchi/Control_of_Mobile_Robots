@@ -2,7 +2,7 @@
 <package format="2">
   <name>car_simulator</name>
   <version>0.0.0</version>
-  <description>The singletrack_sim package</description>
+  <description>The car and bicycle package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

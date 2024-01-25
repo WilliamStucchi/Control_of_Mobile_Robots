@@ -82,6 +82,11 @@ void car_dyn_trajctrl::Prepare(void)
     if (false == Handle.getParam(FullParamName, print_error))
         ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
 
+    // Trajectory selector
+    FullParamName = ros::this_node::getName()+"/traj_sel";
+    if (false == Handle.getParam(FullParamName, traj_sel))
+        ROS_ERROR("Node %s: unable to retrieve parameter %s.", ros::this_node::getName().c_str(), FullParamName.c_str());
+
     /* ROS topics */
     vehicleState_subscriber = Handle.subscribe("/car_state", 1, &car_dyn_trajctrl::vehicleState_MessageCallback, this);
     vehicleCommand_publisher = Handle.advertise<std_msgs::Float64MultiArray>("/car_input", 1);
@@ -176,16 +181,45 @@ void car_dyn_trajctrl::PeriodicTask(void)
 
 
 void car_dyn_trajctrl::compute_trajectory(double& xref, double& dxref, double& yref, double& dyref) {
-    /* 8-shaped trajectory generation */
-    // Trajectory parameters 
-    const double a = 2.0;
-    const double w = (2 * M_PI) / T;
     double t = ros::Time::now().toSec();
+
+    if(traj_sel == 1) {
+        if (t <= 3.0) {
+            xref = t;
+            dxref = 1.0;
+            yref = 0.0;
+            dyref = 0.0;
+        } else {
+            xref = 3*t;
+            dxref = 3.0;
+            yref = 0.0;
+            dyref = 0.0;
+        }
         
-    xref    = a*std::sin(w*t);
-    dxref   = w*a*std::cos(w*t);
-    yref    = a*std::sin(w*t)*std::cos(w*t);
-    dyref   = w*a*(std::pow(std::cos(w*t),2.0)-std::pow(std::sin(w*t),2.0));
+    } else if(traj_sel == 2){
+         if (t <= 3.0) {
+            xref = t;
+            dxref = 1.0;
+            yref = 0.0;
+            dyref = 0.0;
+        } else {
+            xref = t;
+            dxref = 1.0;
+            yref = 1.0;
+            dyref = 0.0;
+        }
+
+    } else {
+        /* 8-shaped trajectory generation */
+        // Trajectory parameters 
+        const double a = 2.0;
+        const double w = (2 * M_PI) / T;
+            
+        xref    = a*std::sin(w*t);
+        dxref   = w*a*std::cos(w*t);
+        yref    = a*std::sin(w*t)*std::cos(w*t);
+        dyref   = w*a*(std::pow(std::cos(w*t),2.0)-std::pow(std::sin(w*t),2.0));
+    }
     
 }
 
